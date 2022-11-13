@@ -1,12 +1,12 @@
 from telethon import functions
 from telethon.sync import errors
 
-from sbb_b import sbb_b
+from tikthon import tikthon
 
 
-@sbb_b.ar_cmd(pattern="كروباتي$")
+@tikthon.ar_cmd(pattern="كروباتي$")
 async def oeo(event):
-    result = await sbb_b(functions.channels.GetGroupsForDiscussionRequest())
+    result = await tikthon(functions.channels.GetGroupsForDiscussionRequest())
     alist = []
     for item in result.chats:
         username = (
@@ -18,12 +18,12 @@ async def oeo(event):
         print(roz)
         alist.append(roz)
     if alist:
-        await sbb_b.send_message("me", "\n".join(alist))
+        await tikthon.send_message("me", "\n".join(alist))
 
 
-@sbb_b.ar_cmd(pattern="الحاظرهم$")
+@tikthon.ar_cmd(pattern="الحاظرهم$")
 async def main(event):
-    result = await sbb_b(functions.contacts.GetBlockedRequest(offset=0, limit=1000000))
+    result = await tikthon(functions.contacts.GetBlockedRequest(offset=0, limit=1000000))
     alist = []
     for user in result.users:
         if not user.bot:
@@ -32,14 +32,14 @@ async def main(event):
             print(roz)
             alist.append(roz)
     if alist:
-        await sbb_b.send_message("me", "\n".join(alist))
+        await tikthon.send_message("me", "\n".join(alist))
 
 
-@sbb_b.ar_cmd(pattern="قيد (.*)")
+@tikthon.ar_cmd(pattern="قيد (.*)")
 async def se(event):
     exe = event.text[5:]
     try:
-        result = await sbb_b(
+        result = await tikthon(
             functions.messages.ToggleNoForwardsRequest(peer=exe, enabled=True)
         )
         await event.edit("تم بنجاح تفعيل وضع تقييد المحتوى")
@@ -47,10 +47,10 @@ async def se(event):
         print(e)  # خاف ما تغير شي يعني القناة اصلا مفعل بيهل تقييد محتوى
 
 
-@sbb_b.ar_cmd(pattern="نوعه (.*)")
+@tikthon.ar_cmd(pattern="نوعه (.*)")
 async def se(event):
     exe = event.text[5:]
-    x = await sbb_b.get_entity(exe)
+    x = await tikthon.get_entity(exe)
     if hasattr(x, "megagroup") and x.megagroup:
         await event.edit("نوع المعرف : كروب")
     elif hasattr(x, "megagroup") and not x.megagroup:
@@ -61,10 +61,10 @@ async def se(event):
         await event.edit("نوع المعرف : لحساب")
 
 
-@sbb_b.ar_cmd(pattern="احذف (.*)")
+@tikthon.ar_cmd(pattern="احذف (.*)")
 async def se(event):
     exe = event.text[5:]
-    await sbb_b.get_dialogs()
+    await tikthon.get_dialogs()
     chat = exe
-    await sbb_b.delete_dialog(chat, revoke=True)
+    await tikthon.delete_dialog(chat, revoke=True)
     await event.edit("- تم بنجاح حذف الدردشة مع المستخدم بنجاح")
