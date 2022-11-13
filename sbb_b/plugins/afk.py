@@ -3,7 +3,7 @@ from datetime import datetime
 
 from telethon.tl import functions, types
 
-from sbb_b import sbb_b as jmthon
+from sbb_b import sbb_b as tikthon
 
 from ..Config import Config
 from ..core.logger import logging
@@ -32,7 +32,7 @@ class AFK:
 AFK_ = AFK()
 
 
-@jmthon.ar_cmd(outgoing=True, edited=False)
+@tikthon.ar_cmd(outgoing=True, edited=False)
 async def set_not_afk(event):
     if AFK_.afk_on is False:
         return
@@ -78,7 +78,7 @@ async def set_not_afk(event):
             )
 
 
-@jmthon.ar_cmd(
+@tikthon.ar_cmd(
     incoming=True, func=lambda e: bool(e.mentioned or e.is_private), edited=False
 )
 async def on_afk(event):
@@ -157,7 +157,7 @@ async def on_afk(event):
             )
 
 
-@jmthon.ar_cmd(pattern="سليب(?:\s|$)([\s\S]*)")
+@tikthon.ar_cmd(pattern="سليب(?:\s|$)([\s\S]*)")
 async def _(event):
     AFK_.USERAFK_ON = {}
     AFK_.afk_time = None
@@ -201,7 +201,7 @@ async def _(event):
                 )
 
 
-@jmthon.ar_cmd(pattern="سليب_ميديا(?:\s|$)([\s\S]*)")
+@tikthon.ar_cmd(pattern="سليب_ميديا(?:\s|$)([\s\S]*)")
 async def _(event):
     reply = await event.get_reply_message()
     media_t = media_type(reply)
