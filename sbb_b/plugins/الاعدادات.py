@@ -2,7 +2,7 @@ import os
 from asyncio.exceptions import CancelledError
 from time import sleep
 
-from sbb_b import sbb_b
+from tikthon import tikthon
 
 from ..core.logger import logging
 from ..core.managers import edit_or_reply
@@ -17,7 +17,7 @@ from . import BOTLOG, BOTLOG_CHATID, HEROKU_APP
 LOGS = logging.getLogger(__name__)
 
 
-@sbb_b.ar_cmd(
+@tikthon.ar_cmd(
     pattern="اعادة تشغيل$",
     disable_errors=True,
 )
@@ -42,14 +42,14 @@ async def _(event):
     except Exception as e:
         LOGS.error(e)
     try:
-        await sbb_b.disconnect()
+        await tikthon.disconnect()
     except CancelledError:
         pass
     except Exception as e:
         LOGS.error(e)
 
 
-@sbb_b.ar_cmd(pattern="أيقاف السورس$")
+@tikthon.ar_cmd(pattern="أيقاف السورس$")
 async def _(event):
     if BOTLOG:
         await event.client.send_message(
@@ -64,7 +64,7 @@ async def _(event):
         os._exit(143)
 
 
-@sbb_b.ar_cmd(pattern="أيقاف مؤقت( [0-9]+)?$")
+@tikthon.ar_cmd(pattern="أيقاف مؤقت( [0-9]+)?$")
 async def _(event):
     if " " not in event.pattern_match.group(1):
         return await edit_or_reply(
@@ -83,7 +83,7 @@ async def _(event):
     await event.edit("**⪼ اهلا الان اشتغل بشكل طبيعي**")
 
 
-@sbb_b.ar_cmd(pattern="الاشعارات (تشغيل|ايقاف)$")
+@tikthon.ar_cmd(pattern="الاشعارات (تشغيل|ايقاف)$")
 async def set_pmlog(event):
     input_str = event.pattern_match.group(1)
     if input_str == "ايقاف":
